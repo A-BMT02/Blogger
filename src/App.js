@@ -25,7 +25,7 @@ function App() {
   return (
     <CardProvider>
     <div className="App">
-      <Router>
+      <Router basename="/Blogger">
         <Routes>
           <Route exact path="/" element={ <><Navbar1/> <Navbar2/> <SliderBlog/> <HomeSectionA/> <Subscribe/> <Footer/> </>}/>
           <Route exact path="/login" element={<Login/>}/>
