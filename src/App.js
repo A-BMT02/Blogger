@@ -33,7 +33,7 @@ function App() {
           <Route
           path="/home" 
           element={
-            <ProtectedRoute redirectTo="/login">
+            <ProtectedRoute redirectTo="/construction">
                 <><p>Website under Construction</p></>
             </ProtectedRoute>
           }
