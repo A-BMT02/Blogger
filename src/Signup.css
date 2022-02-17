@@ -1,0 +1,43 @@
+.wholeLogin {
+  position: relative;
+}
+
+.removeErrorAnimate {
+  display: block;
+  position: absolute;
+  top: 0;
+  /* left: 50%; */
+  background-color: rgb(255, 0, 0, 0.7);
+  text-align: center;
+  padding: 1rem 2rem;
+  /* visibility: hidden; */
+  opacity: 0;
+  transition: opacity 0.5s;
+  border-radius: 1rem;
+}
+
+.errorAnimate {
+  border-radius: 1rem;
+  transition: opacity 0.5s;
+  display: block;
+  position: absolute;
+  top: 0;
+  /* left: 50%; */
+  background-color: rgb(255, 0, 0, 0.7);
+  text-align: center;
+  padding: 1rem 2rem;
+  opacity: 1;
+  width: 25rem;
+  /* animation: visible 2s linear 0.1s; */
+  /* visibility: visible; */
+}
+
+@keyframes visible {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
