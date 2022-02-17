@@ -6,7 +6,7 @@ import HomeSectionA from "./HomeSectionA";
 import Subscribe from "./Subscribe";
 import Footer from "./Footer";
 import Login from "./Login" ; 
-import {BrowserRouter as Router , Routes ,Route, useNavigate} from "react-router-dom" ; 
+import {BrowserRouter as Router , Routes ,Route, useNavigate ,HashRouter} from "react-router-dom" ; 
 import "./App.css" ; 
 import { Signup } from "./Signup" ; 
 import ProtectedRoute from "./ProtectedRoute";
@@ -25,11 +25,10 @@ function App() {
   return (
     <CardProvider>
     <div className="App">
-      <Router basename="/">
+      <Router basename="/Blogger">
         <Routes>
-          <Route exact path="/" element={ <><Navbar1/> <Navbar2/> <SliderBlog/> <HomeSectionA/> <Subscribe/> <Footer/> </>}/>
-          <Route exact path="/login" element={<Login/>}/>
-          <Route exact path="signup" element={<><Signup/></>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="signup" element={<><Signup/></>}/>
           <Route
           path="/home" 
           element={
@@ -38,6 +37,8 @@ function App() {
             </ProtectedRoute>
           }
           />
+          <Route path="/" element={ <><Navbar1/> <Navbar2/> <SliderBlog/> <HomeSectionA/> <Subscribe/> <Footer/> </>}/>
+
         </Routes>
       </Router>
     </div>
