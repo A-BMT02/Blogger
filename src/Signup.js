@@ -6,13 +6,13 @@ import Login from './Login';
 import { auth } from "./firebase" ; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import "./Signup.css" ;
-import { CardContext } from './Context';
+import { UserContext } from './Context/UserContext';
 import { onAuthStateChanged } from "firebase/auth" ;
-
+import { useAuth } from './Context/UserContext';
 
 export function Signup() {
-    // const [ setUser ] = useContext(CardContext) ; 
-    const  user = useContext(CardContext) ;
+    // const [ setUser ] = useContext(UserContext) ; 
+    const  {user} = useAuth() ;
     
 
     const emailRef = useRef(null) ; 
@@ -25,6 +25,8 @@ export function Signup() {
     const [ password2 , setPassword2] = useState("") ;
     const [ error , setError ] = useState("") ;
     const [ errorAnimate , setErrorAnimate] = useState(false) ;  
+
+    const { signup } = useAuth() ;
 
     const navigate = useNavigate() ; 
     const emailFocus = () => {
@@ -77,43 +79,35 @@ export function Signup() {
         setError("") ; 
         setErrorAnimate(false)
     }
-    const signup = (e) => {
+
+    const signupUser = async (e) => {
         if(!error) {
             setErrorAnimate(false) ;
         } 
         e.preventDefault() ; 
         if( password ===  password2) {
-            createUserWithEmailAndPassword(auth , email , password)
-        .then(User => {
-            console.log(User.user)
-            setError("") ;
-            setErrorAnimate(false) ; 
-        })
-        .catch(err => {
-            const errMsg = err.message
-            setError(errMsg) ; 
-            setErrorAnimate(true) ; 
-            console.log(errMsg) ;
+            try{
+                await signup(email , password) ; 
+                setError("") ;
+                setErrorAnimate(false) ;
+                }catch(err) {
+                const errMsg = err.message
+                setError(errMsg) ; 
+                setErrorAnimate(true) ;
+            }
 
-        })
         } else {
             setError("Passwords do not match") ;
             setErrorAnimate(true) ; 
-
         }
-        
         
     }
       
-    useEffect(() => {
-        if(user) {
-            console.log("user is" , user)
-            navigate("/") ; 
-        } else {
-            console.log("no user") ;
-
-        }
-    } , [user])
+    // useEffect(() => {
+    //     if(user) {
+    //         navigate("/") ; 
+    //     } 
+    // } , [])
 
 
   return (
@@ -121,7 +115,7 @@ export function Signup() {
         <div ref={errorRef} className={errorAnimate ? "errorAnimate" : "removeErrorAnimate"}>
             <h2>{error}</h2>
         </div>
-        <form className="loginContainer"  autoComplete="off" onSubmit={e => signup(e)}>
+        <form className="loginContainer"  autoComplete="off" onSubmit={e => signupUser(e)}>
             <div className="loginLogo">
                 <Logo className="logo"/>
             </div>

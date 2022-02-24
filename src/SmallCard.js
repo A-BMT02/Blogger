@@ -1,21 +1,22 @@
 import React, { useContext } from 'react';
-import { CardContext } from './Context';
+import { UserContext } from './Context/UserContext';
 import "./SmallCard.css" ;
-import { data } from "./Context" ;
-
+import { data } from "./Context/UserContext" ;
+import { useData } from './Context/DataContext';
 
 export default function SmallCard() {
-    const dummy = data ; 
+  const  {data}  = useData() ; 
+
   return <div className="smallCard">
       
       <div className="imageContainer">
-        <img src ={dummy[1].img}></img>
+        <img src ={data[1].img}></img>
       </div>
 
       <div className="imageDetails">
-            <h3>{dummy[1].title}</h3>
-            <h6>{dummy[1].author}<span> in </span>{dummy[0].category}</h6>
-            <h6 className="date">{dummy[1].date}</h6>
+            <h3>{data[1].title}</h3>
+            <h6>{data[1].author}<span> in </span>{data[0].category}</h6>
+            <h6 className="date">{data[1].date}</h6>
       </div>
   </div>;
 }

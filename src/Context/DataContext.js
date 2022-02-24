@@ -1,8 +1,17 @@
-import React , { createContext , useState , useEffect  } from "react" ; 
-import { auth } from "./firebase" ; 
-import { onAuthStateChanged  } from "firebase/auth";
+import React, { createContext, useContext } from "react";
 
- export const data = [
+export const dataContext = createContext() ; 
+
+export function useData() {
+    return useContext(dataContext) ; 
+}
+
+export const topbar = ["About Us" , "Log In" , "Get Started"] ;
+
+export const DataProvider = (props) => {
+
+  
+    const data = [
     {
       id : 0 , 
       key :  0 , 
@@ -60,35 +69,11 @@ import { onAuthStateChanged  } from "firebase/auth";
   } , 
   ]  ;
 
-export const CardContext = createContext() ; 
-export const CardProvider= props => {
 
-  const [ user , setUser] = useState() ; 
-  const [ loading , setLoading] = useState(true) ;
-
+  return (
+      <dataContext.Provider value={ {data , topbar} }>
+          {props.children}
+      </dataContext.Provider>
+  )
+}
  
-    
-    useEffect(() => {
-    const unsubscribe = onAuthStateChanged( auth , user => {
-      if(user) {
-         setUser(user) ;
-        console.log(user) ;
-
-      } else {
-        console.log("no user" , user)
-        console.log(user) ;
-      }
-
-      setLoading(false) ;
-
-      return unsubscribe ;
-    })
-  } ,  )
-
-    return (
-        <CardContext.Provider value={ user }>
-            {!loading && props.children}
-        </CardContext.Provider>
-    )
-} ; 
-

@@ -1,7 +1,7 @@
 import { Navbar1 } from "./Navbar1";
 import {Navbar2 } from "./Navbar2" ; 
 import { SliderBlog } from "./SliderBlog";
-import { CardProvider } from "./Context" ; 
+import { UserProvider } from "./Context/UserContext" ; 
 import HomeSectionA from "./HomeSectionA";
 import Subscribe from "./Subscribe";
 import Footer from "./Footer";
@@ -13,17 +13,19 @@ import ProtectedRoute from "./ProtectedRoute";
 import { useContext, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase" ; 
-import { CardContext } from "./Context" ; 
+import { UserContext } from "./Context/UserContext" ; 
+import { DataProvider } from "./Context/DataContext" ; 
 
 function App() {
 
-    //const [ setUser ] = useContext(CardContext) ; 
+    //const [ setUser ] = useContext(UserContext) ; 
   
 
 
 
   return (
-    <CardProvider>
+    <DataProvider>
+      <UserProvider>
     <div className="App">
       <Router basename="/Blogger">
         <Routes>
@@ -38,12 +40,14 @@ function App() {
           }
           />
           <Route path="/" element={ <><Navbar1/> <Navbar2/> <SliderBlog/> <HomeSectionA/> <Subscribe/> <Footer/> </>}/>
-
+          <Route path="/blog" element={<p>Under Construction</p>}/>
+          <Route path="/read" element={<p>Under Construction</p>}/>
+          <Route path="*" element={<p>Under Construction</p>}/>
         </Routes>
       </Router>
     </div>
-
-    </CardProvider>
+    </UserProvider>
+    </DataProvider>
   );
 }
 

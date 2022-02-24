@@ -1,22 +1,22 @@
 import React , { useContext } from 'react';
-import { CardContext } from './Context';
+import { UserContext } from './Context/UserContext';
 import "./MediumCard.css" ;
-import { data } from "./Context" ;
+import { useData } from "./Context/DataContext" ;
 
 
 export default function MediumCard() {
-    const dummy= data ; 
+  const  {data}  = useData() ;
   return <div className="mediumCard">
       
       <div className="imageContainer">
-        <img src ={dummy[0].img}></img>
+        <img src ={data[0].img}></img>
       </div>
 
       <div className="imageDetails">
-            <h3>{dummy[0].title}</h3>
-            <p>{dummy[0].sneak}</p>
-            <h6>{dummy[0].author}<span> in </span>{dummy[0].category}</h6>
-            <h6 className="date">{dummy[0].date}</h6>
+            <h3>{data[0].title}</h3>
+            <p>{data[0].sneak}</p>
+            <h6>{data[0].author}<span> in </span>{data[0].category}</h6>
+            <h6 className="date">{data[0].date}</h6>
       </div>
   </div>;
 }

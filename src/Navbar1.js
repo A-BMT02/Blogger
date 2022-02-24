@@ -1,24 +1,31 @@
 import React, { useContext, useEffect, useState  } from "react";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
-import { AiOutlineSearch } from "react-icons/ai";
-import { SearchInput } from "./SearchInput";
 import "./Navbar1.css";
 import { Logo } from "./Logo";
 import { GoThreeBars } from "react-icons/go" ;
 import  Sidebar  from "./Sidebar" ; 
-import { CardContext } from "./Context" ;
+import { UserContext } from "./Context/UserContext" ;
 import {signOut , onAuthStateChanged } from "firebase/auth" ; 
 import { auth } from "./firebase" ; 
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./Context/UserContext";
+import { useData } from "./Context/DataContext"
 
 export const Navbar1 = () => {
+    const { topbar } = useAuth() ; 
+    const { loading } = useAuth() ; 
 
+    // const [item , setItem ] = useState([])
   const [ close , setClose ] = useState(true) ; 
-    const  user  = useContext(CardContext) ;
-    // const [ setUser ] = useContext(CardContext) ; 
+    const { user } = useAuth() ;
+    //const [ setUser ] = useContext(UserContext) ; 
+
+    const [ option , setOption] = useState("") ;
 
   const [ button , setButton ] = useState("") ; 
   const navigate = useNavigate() ;
+
+  const { logout } = useAuth() ; 
 
   const handleClose = () => {
     setClose(true) ; 
@@ -26,34 +33,61 @@ export const Navbar1 = () => {
 
    
 
-  const loginOrLogout = () => {
-    if(button === "Log Out") {
-     //log Out 
-      signOut(auth).then(() => {
-        console.log("signed out")
-        // setUser({}) ;
-        setButton("Log In") ;
-        console.log(button) ;
-      }) .catch(err => {
-        console.log(err) ; 
-      })
-    } else {
-      //log in
-      navigate("/login") ; 
+  //   if(button === "Log Out") {
+  //    log Out 
+  //     try{
+  //       await logout() ;
+  //       setButton("Log In") ; 
+  //     }catch(err) {
+  //       alert(err) ; 
+  //     }
+
+  //   } else {
+  //     log in
+  //     navigate("/login") ; 
+  //   }
+  // }
+
+  const logoutUser = async () => {
+    await logout() ; 
+  }
+
+  const redirect = (e) => {
+    switch(e.target.value){
+      case "Post a Blog" : 
+        navigate("/blog") ;
+        break;
+
+      case "Read" : 
+        navigate("/read") ;
+        break;
+
+      case "Log Out" :
+        logoutUser() ; 
+        break; 
+
+      case "Log In" :
+        navigate("/login") ; 
+        break ; 
+
+      case "About Us" : 
+        navigate("/aboutus") ; 
+        break ; 
+
+        case "Get Started" : 
+          navigate("/getstarted") ;
+          break ;
+
+      default : 
+      console.log(e.target.value.length)
     }
   }
 
-  useEffect(() => {
-    if(user) {
-      console.log(user) ;
-      setButton("Log Out")
-    } else {
-      setButton("Log In")
-    }
 
-  } , [button])
+ 
 
   return (
+    
     <div className="navbar1">
         {!close && <Sidebar setClose={setClose} handleClose={handleClose}/>  }
       <div className="logo">
@@ -64,26 +98,16 @@ export const Navbar1 = () => {
         </div>
       </div>
 
-      <div className="navIcons">
-        <div className="social">
-          <button className="loginOrSignUp" onClick={e => loginOrLogout()}>{button}</button>
-          {/* <div  className="icons">
-            <FaFacebookF/>
-          </div>
-          <div  className="icons">
-            <FaTwitter />
-          </div>
-          <div className="icons" >
-            <FaInstagram />
-          </div> */}
-        </div>
-        <div className="searchAndIcon">
-         <SearchInput className="icons" />
-          <div className="navbarSearch">
-            <AiOutlineSearch className="icon" />
-          </div>
-        </div>
-      </div>
+        {/* here */}
+        <div className="navbar2">
+
+        <ul>
+            {topbar.map( item => (
+            <li ><a><button value={item} onClick={(e) => redirect(e)}>{item}</button></a></li>  
+            ) ) }
+           
+        </ul>
+    </div>
     </div>
   );
 };

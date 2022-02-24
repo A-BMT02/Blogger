@@ -4,9 +4,9 @@ import "./Login.css" ;
 import { Link , useNavigate } from "react-router-dom" ; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "./firebase" ; 
-import { CardContext } from './Context';
+import { UserContext } from './Context/UserContext';
 import { onAuthStateChanged } from "firebase/auth" ;
-
+import { useAuth } from './Context/UserContext';
 
 export default function Login() {
 
@@ -17,10 +17,11 @@ export default function Login() {
     const [ password , setPassword ] = useState("") ;
      const [ error , setError ] = useState("") ;
     const [ errorAnimate , setErrorAnimate] = useState(false) ;  
-    const  user  = useContext(CardContext) ;
-    // const [ setUser ] = useContext(CardContext) ; 
+    const  {user}  = useAuth() ;
+   
+    const { login } = useAuth() ; 
 
-      const navigate = useNavigate() ; 
+    const navigate = useNavigate() ; 
 
 
     const errorRef = useRef("") ; 
@@ -56,25 +57,21 @@ export default function Login() {
         }
     }
 
-    const login = (e) => {
+    const loginUser = async (e) => {
+        e.preventDefault() ;
         if(!error) {
             setErrorAnimate(false) ;
         }
-        e.preventDefault() ; 
-         
-        signInWithEmailAndPassword(auth , email , password)
-        .then(response => {
-            console.log(response.user)
-            // setUser(response.user) ;
+        try {
+            await login(email , password) ; 
             setError("") ;
-            setErrorAnimate(false) ; 
-        }) 
-        .catch(err => {
+            setErrorAnimate(false) ;
+            navigate("/") ; 
+        } catch(err) {
             const errMsg = err.message
             setError(errMsg) ; 
-            setErrorAnimate(true) ; 
-            console.log(err) ;
-        })
+            setErrorAnimate(true) ;
+        }
     }
 
     const resetError = () => {
@@ -82,15 +79,11 @@ export default function Login() {
         setErrorAnimate(false)
     }
 
-    useEffect(() => {
-        if(user) {
-            console.log("user is" , user)
-            navigate("/") ; 
-        } else {
-            console.log("no user") ;
-
-        }
-    } , [user])
+    // useEffect(() => {
+    //     if(user) {
+    //         navigate("/") ; 
+    //     } 
+    // } , [user]) 
 
   return (
     <div className='wholeLogin'>
@@ -98,7 +91,7 @@ export default function Login() {
             <h2>{error}</h2>
         </div>
 
-        <form className="loginContainer"  autoComplete="off" onSubmit={e => login(e)}>
+        <form className="loginContainer"  autoComplete="off" onSubmit={e => loginUser(e)}>
             <div className="loginLogo">
                 <Logo className="logo"/>
             </div>

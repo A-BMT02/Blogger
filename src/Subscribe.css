@@ -29,7 +29,7 @@
   max-width: 100%;
 }
 
-.searchAndIcon > .search {
+.wholeSubscribe > .searchAndIcon > .search {
   border-radius: 40px;
   padding: 0.8rem 20px;
   background-color: white;
@@ -37,7 +37,7 @@
   border-bottom: 1px solid rgba(73, 80, 87, 0.2);
 }
 
-.searchAndIcon > .search > .searchTxt {
+.wholeSubscribe > .searchAndIcon > .search > .searchTxt {
   border: none;
   background: none;
   outline: none;
@@ -49,7 +49,7 @@
   font-family: "Cabin, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji";
 }
 
-.searchAndIcon {
+.wholeSubscribe > .searchAndIcon {
   width: 50%;
   display: flex;
   align-items: center;
@@ -71,7 +71,7 @@
 .searchAndIcon > .icon > .send {
   color: white;
   font-weight: bold;
-  z-index: 100;
+  z-index: 50;
   font-size: 1.3rem;
 }
 
@@ -97,11 +97,11 @@
     align-items: flex-start;
   }
 
-  .searchAndIcon {
+  .wholeSubscribe > .searchAndIcon {
     width: 100%;
   }
 
-  .searchAndIcon {
+  .wholeSubscribe > .searchAndIcon {
     justify-content: flex-start;
   }
 }

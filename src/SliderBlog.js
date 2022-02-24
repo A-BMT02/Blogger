@@ -2,11 +2,14 @@ import React , { useContext, useState , useRef } from 'react';
 import "./SliderBlog.css" ; 
 import { BiArrowBack } from "react-icons/bi";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
-import { CardContext } from './Context';
-import { data } from "./Context" ;
+import { UserContext } from './Context/UserContext';
+import { useData } from "./Context/DataContext" ; 
 
 export const SliderBlog = () => {
-  const  dummy   = data ; 
+  
+ 
+  const  {data}  = useData() ; 
+
 const [ position , setPosition ] = useState(0) ;
 
 const ref = useRef([]) ; 
@@ -20,9 +23,9 @@ const prev = (e) => {
       return (previous - 1 ) ; 
 
     } else {
-      //console.log( (dummy.length) - 1 )  ; 
-      translate(dummy.length - 1) ;
-      return (dummy.length - 1 ) ; 
+      //console.log( (data.length) - 1 )  ; 
+      translate(data.length - 1) ;
+      return (data.length - 1 ) ; 
     }
   })
 }
@@ -30,7 +33,7 @@ const prev = (e) => {
 const next = (e) => {
   
   setPosition(prev => {
-    if( (prev !== (dummy.length - 1) ) ) {
+    if( (prev !== (data.length - 1) ) ) {
      // console.log(prev + 1) ; 
       translate(prev + 1) 
       return (prev + 1) ;
@@ -60,20 +63,21 @@ const boxClicked = (index) => {
       <BiArrowBack className="backIcon" onClick={e => prev()}/>
   </div>
 
+  
   <div className="slider" ref={ref}>
-     { dummy.map( (item , i) => (
+     { data.map( (item , i) => (
       <div className="one">
       
       <div className="sliderImg">
-        <img src ={dummy[i].img} alt=""></img>
+        <img src ={data[i].img} alt=""></img>
       </div>
 
       <div className="sliderRight">
-            <h4>{dummy[i].header}</h4>
-            <h3>{dummy[i].title}</h3>
-            <p>{dummy[i].sneak}</p>
-            <h6>{dummy[i].author}<span> in </span>{dummy[i].category}</h6>
-            <h6 className="date">{dummy[i].date}</h6>
+            <h4>{data[i].header}</h4>
+            <h3>{data[i].title}</h3>
+            <p>{data[i].sneak}</p>
+            <h6>{data[i].author}<span> in </span>{data[i].category}</h6>
+            <h6 className="date">{data[i].date}</h6>
       </div>
   </div>
      ))}
@@ -86,7 +90,7 @@ const boxClicked = (index) => {
   </div>
 
   <div className="boxContainer">
-    {dummy.map( (item , index) => (
+    {data.map( (item , index) => (
       <div className={index === position ? "box active" : "box"} data-id={index} onClick={e => boxClicked(index)}>
         </div>
     ))}

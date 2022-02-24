@@ -1,17 +1,18 @@
 import React from "react";
 import "./Navbar2.css" ; 
+import { AiOutlineSearch } from "react-icons/ai";
+import { SearchInput } from "./SearchInput";
+
 export const Navbar2 = () => {
   return (
-    <div className="navbar2">
-        <ul>
-            <li><a>Home</a></li>
-            <li><a>Politics</a></li>
-            <li><a>Business</a></li>
-            <li><a>Health</a></li>
-            <li><a>Design</a></li>
-            <li><a>Sport</a></li>
-            <li><a>Contact</a></li>
-        </ul>
-    </div>
+          <div className="navIcons">
+        <div className="searchAndIcon">
+         <SearchInput className="icons" />
+          <div className="navbarSearch">
+            <AiOutlineSearch className="icon" />
+          </div>
+        </div>
+      </div>
+    
   );
 };
